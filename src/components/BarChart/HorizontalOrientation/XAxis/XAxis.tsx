@@ -1,4 +1,4 @@
-import { CHART_PADDING } from 'constants/barChart';
+import { CHART_PADDING } from '../../../../constants/barChart';
 
 interface Props {
   xAxisY: number;

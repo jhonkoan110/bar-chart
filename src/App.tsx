@@ -1,5 +1,5 @@
-import { DataType } from 'components/BarChart/BarChart';
 import { BarChart } from './components';
+import { DataType } from './types/BarChart';
 
 const mock: DataType[] = [
   {

@@ -1,5 +1,5 @@
-import { CHART_PADDING } from 'constants/barChart';
 import { memo } from 'react';
+import { CHART_PADDING } from '../../../../constants/barChart';
 
 interface Props {
   xAxisY: number;

@@ -1,6 +1,6 @@
-import { CHART_PADDING } from 'constants/barChart';
 import { useMemo } from 'react';
-import { DataType } from 'types/BarChart';
+import { CHART_PADDING } from '../constants/barChart';
+import { DataType } from '../types/BarChart';
 
 interface GetChartCalcsDTO {
   width: number;

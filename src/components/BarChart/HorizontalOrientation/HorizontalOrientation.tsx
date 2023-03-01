@@ -1,11 +1,11 @@
 import { Fragment, useMemo } from 'react';
-import { BarChartProps } from 'types/BarChart';
-import { useMouseMoveTooltip } from 'hooks/useMouseMoveTooltip';
-import { Tooltip } from 'components/Tooltip/Tooltip';
+import { BarChartProps } from '../../..';
+import { CHART_PADDING } from '../../../constants/barChart';
+import { useChartCalcs } from '../../../hooks/useChartCalcs';
+import { useMouseMoveTooltip } from '../../../hooks/useMouseMoveTooltip';
+import { Tooltip } from '../../Tooltip';
 import { XAxis } from './XAxis';
 import { YAxis } from './YAxis';
-import { useChartCalcs } from 'hooks/useChartCalcs';
-import { CHART_PADDING } from 'constants/barChart';
 
 export const HorizontalOrientaion = ({
   ticks = 5,

@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import ErrorBoundary from 'components/ErrorBoundary';
+import ErrorBoundary from '../ErrorBoundary';
 import { HorizontalOrientaion } from './HorizontalOrientation';
 import { Legends } from './Legends';
 import { VerticalOrientaion } from './VerticalOrientation';
