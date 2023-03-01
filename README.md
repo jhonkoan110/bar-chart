@@ -52,7 +52,7 @@ const data = [
   },
 ];
 
-const Component: FC = () => {
+const Component = () => {
   return (
     <div>
       <BarChart
@@ -76,7 +76,7 @@ const Component: FC = () => {
 | ----------- | --------------------------------------- | ----------------------- | --------------------- | ------------ |
 | orientation | Ориентация графика                      | 'vertical' 'horizontal' | 'vertical'            | нет          |
 | height      | Высота svg-контейнера                   | number                  | -                     | да           |
-| width       | Ширина svg-контейнере                   | number                  | -                     | да           |
+| width       | Ширина svg-контейнера                   | number                  | -                     | да           |
 | data        | Массив данных для графика               | DataType[]              | -                     | да           |
 | colors      | Массив цветов для отображаемых столбцов | string[]                | -                     | нет          |
 | legends     | Массив подписей для столбцов            | string[]                | -                     | нет          |

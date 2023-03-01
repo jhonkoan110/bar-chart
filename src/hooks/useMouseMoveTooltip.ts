@@ -5,18 +5,16 @@ export const useMouseMoveTooltip = () => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [tooltipText, setTooltipText] = useState('');
 
-  const handleMouseOver =
-    (val: number, color: React.CSSProperties['color'] = 'black') =>
-    (e: React.MouseEvent<SVGRectElement>) => {
-      const { clientX, clientY } = e;
+  const handleMouseOver = (val: number) => (e: React.MouseEvent<SVGRectElement>) => {
+    const { clientX, clientY } = e;
 
-      setMouseCoords({ x: clientX, y: clientY });
-      setTooltipText(String(val));
+    setMouseCoords({ x: clientX, y: clientY });
+    setTooltipText(String(val));
 
-      if (!showTooltip) {
-        setShowTooltip(true);
-      }
-    };
+    if (!showTooltip) {
+      setShowTooltip(true);
+    }
+  };
 
   const handleMouseLeave = () => {
     setShowTooltip(false);

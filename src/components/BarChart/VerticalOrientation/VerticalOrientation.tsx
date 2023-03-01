@@ -1,60 +1,53 @@
-import React, { Fragment, useMemo } from 'react';
-import { BarChartProps } from '..';
-import { useMouseMoveTooltip } from '../../../hooks/useMouseMoveTooltip';
-import { getChartCalcs } from '../../../utils/getChartCalcs';
-import { Tooltip } from '../../Tooltip';
-import { Legends } from '../Legends';
+import { Fragment, useMemo } from 'react';
+import { useMouseMoveTooltip } from 'hooks/useMouseMoveTooltip';
+import { Tooltip } from 'components/Tooltip/Tooltip';
 import { XAxis } from './XAxis';
 import { YAxis } from './YAxis';
+import { BarChartProps } from 'types/BarChart';
+import { useChartCalcs } from 'hooks/useChartCalcs';
+import { CHART_PADDING } from 'constants/barChart';
 
 export const VerticalOrientaion = ({
-  data,
-  height,
-  width,
-  colors,
-  containerClassName,
-  legends,
   ticks = 5,
   xAxisName = 'x',
   yAxisName = 'y',
+  ...props
 }: Omit<BarChartProps, 'orientation'>) => {
   const { handleMouseLeave, handleMouseOver, mouseCoords, showTooltip, tooltipText } = useMouseMoveTooltip();
-  const { barPlotWidth, dataYMax, x0, xAxisLength, xAxisY, y0, yAxisLength } = useMemo(() => {
-    return getChartCalcs({
-      height,
-      width,
-      data,
-    });
-  }, [width, height, data]);
+  const { barPlotWidth, dataYMax, xAxisLength, xAxisY, yAxisLength } = useChartCalcs({
+    height: props.height,
+    width: props.width,
+    data: props.data,
+  });
 
   return (
-    <div style={{ width }}>
-      <svg width={width} height={height} className={containerClassName}>
-        <XAxis x0={x0} xAxisLength={xAxisLength} xAxisName={xAxisName} xAxisY={xAxisY} />
+    <div style={{ width: props.width }}>
+      <svg width={props.width} height={props.height} className={props.containerClassName}>
+        <XAxis xAxisLength={xAxisLength} xAxisName={xAxisName} xAxisY={xAxisY} />
 
-        <YAxis dataYMax={dataYMax} ticks={ticks} x0={x0} y0={y0} yAxisLength={yAxisLength} yAxisName={yAxisName} />
+        <YAxis dataYMax={dataYMax} ticks={ticks} yAxisLength={yAxisLength} yAxisName={yAxisName} />
 
         {/* Bars */}
         {useMemo(
           () =>
-            data.map((value, index) => {
+            props.data.map((value, index) => {
               const sidePadding = 10;
               const side = index !== 0 ? sidePadding : 0;
-              const x = x0 + index * barPlotWidth + side * index;
+              const x = CHART_PADDING + index * barPlotWidth + side * index;
               const numValues = value.values;
               const numValuesAmount = numValues.length;
               const yArr = numValues.map((val) => {
                 const yRatio = val / dataYMax;
 
                 return {
-                  y: y0 + (1 - yRatio) * yAxisLength,
+                  y: CHART_PADDING + (1 - yRatio) * yAxisLength,
                   height: yRatio * yAxisLength,
                   val,
                 };
               });
 
               return (
-                <g key={index} className="group">
+                <g key={index}>
                   {yArr.map(({ y, height, val }, i) => {
                     let startX;
 
@@ -74,9 +67,9 @@ export const VerticalOrientaion = ({
                           y={y}
                           height={height}
                           width={barPlotWidth / numValuesAmount}
-                          onMouseMove={handleMouseOver(val, colors?.[i])}
+                          onMouseMove={handleMouseOver(val)}
                           onMouseLeave={handleMouseLeave}
-                          fill={colors?.[i]}
+                          fill={props.colors?.[i]}
                         />
                       </Fragment>
                     );
@@ -88,10 +81,9 @@ export const VerticalOrientaion = ({
               );
             }),
           // eslint-disable-next-line
-          [width, height, data],
+          [props.width, props.height, props.data],
         )}
       </svg>
-      {legends && <Legends legends={legends} colors={colors} />}
       {showTooltip && <Tooltip text={tooltipText} {...mouseCoords} />}
     </div>
   );

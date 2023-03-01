@@ -1,6 +1,5 @@
-import React from 'react';
-import { BarChart, DataType } from './components/BarChart';
-import { Test } from './components/test';
+import { DataType } from 'components/BarChart/BarChart';
+import { BarChart } from './components';
 
 const mock: DataType[] = [
   {
@@ -47,7 +46,6 @@ function App() {
         xAxisName="Month"
         yAxisName="Details"
       />
-      <Test />
     </div>
   );
 }

@@ -1,73 +1,56 @@
-import React, { Fragment, useMemo } from 'react';
-import { BarChartProps } from '..';
-import { useMouseMoveTooltip } from '../../../hooks/useMouseMoveTooltip';
-import { getChartCalcs } from '../../../utils/getChartCalcs';
-import { Tooltip } from '../../Tooltip';
-import { Legends } from '../Legends';
+import { Fragment, useMemo } from 'react';
+import { BarChartProps } from 'types/BarChart';
+import { useMouseMoveTooltip } from 'hooks/useMouseMoveTooltip';
+import { Tooltip } from 'components/Tooltip/Tooltip';
 import { XAxis } from './XAxis';
 import { YAxis } from './YAxis';
+import { useChartCalcs } from 'hooks/useChartCalcs';
+import { CHART_PADDING } from 'constants/barChart';
 
 export const HorizontalOrientaion = ({
-  data,
-  height,
-  width,
-  colors,
-  containerClassName,
-  legends,
   ticks = 5,
   xAxisName = 'x',
   yAxisName = 'y',
+  ...props
 }: Omit<BarChartProps, 'orientation'>) => {
   const { handleMouseLeave, handleMouseOver, mouseCoords, showTooltip, tooltipText } = useMouseMoveTooltip();
   const {
     dataYMax: dataXMax,
-    x0,
     xAxisLength,
     xAxisY,
-    y0,
     yAxisLength,
-  } = useMemo(() => {
-    return getChartCalcs({
-      height,
-      width,
-      data,
-    });
-  }, [width, height, data]);
+  } = useChartCalcs({
+    height: props.height,
+    width: props.width,
+    data: props.data,
+  });
 
-  const barPlotHeight = yAxisLength / data.length - 10;
+  const barPlotHeight = yAxisLength / props.data.length - 10;
 
   return (
-    <div style={{ width }}>
-      <svg width={width} height={height} className={containerClassName}>
-        <XAxis
-          dataXMax={dataXMax}
-          ticks={ticks}
-          x0={x0}
-          xAxisLength={xAxisLength}
-          xAxisY={xAxisY}
-          xAxisName={xAxisName}
-        />
+    <div style={{ width: props.width }}>
+      <svg width={props.width} height={props.height} className={props.containerClassName}>
+        <XAxis dataXMax={dataXMax} ticks={ticks} xAxisLength={xAxisLength} xAxisY={xAxisY} xAxisName={xAxisName} />
+        <YAxis yAxisLength={yAxisLength} yAxisName={yAxisName} />
 
-        <YAxis x0={x0} y0={y0} yAxisLength={yAxisLength} yAxisName={yAxisName} />
-
-        <text x={x0 - 20} y={y0 + yAxisLength + 20}>
+        <text x={CHART_PADDING - 20} y={CHART_PADDING + yAxisLength + 20}>
           0
         </text>
 
         {/* Bars */}
         {useMemo(
           () =>
-            data.map((value, index) => {
+            props.data.map((value, index) => {
               const sidePadding = 10;
               const side = index !== 0 ? sidePadding : 0;
-              const y = yAxisLength - index * barPlotHeight - side * index + y0;
+              const y = yAxisLength - index * barPlotHeight - side * index + CHART_PADDING;
               const numValues = value.values;
               const numValuesAmount = numValues.length;
               const xArr = numValues.map((val) => {
                 const xRatio = val / dataXMax;
 
                 return {
-                  x: x0,
+                  x: CHART_PADDING,
                   width: xRatio * xAxisLength,
                   val,
                 };
@@ -94,24 +77,23 @@ export const HorizontalOrientaion = ({
                           y={startY}
                           height={barPlotHeight / numValuesAmount}
                           width={width}
-                          onMouseMove={handleMouseOver(val, colors?.[i])}
+                          onMouseMove={handleMouseOver(val)}
                           onMouseLeave={handleMouseLeave}
-                          fill={colors?.[i]}
+                          fill={props.colors?.[i]}
                         />
                       </Fragment>
                     );
                   })}
-                  <text x={x0 - 30} y={y - barPlotHeight / 2}>
+                  <text x={CHART_PADDING - 30} y={y - barPlotHeight / 2}>
                     {value.name}
                   </text>
                 </g>
               );
             }),
           // eslint-disable-next-line
-          [width, height, data],
+          [props.width, props.height, props.data],
         )}
       </svg>
-      {legends && <Legends legends={legends} colors={colors} />}
       {showTooltip && <Tooltip text={tooltipText} {...mouseCoords} />}
     </div>
   );

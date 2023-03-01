@@ -1,14 +1,12 @@
-import React, { memo } from 'react';
-import ErrorBoundary from '../ErrorBoundary';
+import { memo } from 'react';
+import ErrorBoundary from 'components/ErrorBoundary';
 import { HorizontalOrientaion } from './HorizontalOrientation';
 import { Legends } from './Legends';
 import { VerticalOrientaion } from './VerticalOrientation';
 
-// export type DataType = Array<Record<string, number | string> & { name: string }>;
-// export type DataType = Array<Record<>>
 export interface DataType {
   name: string;
-  values: number[]
+  values: number[];
 }
 
 export interface BarChartProps {
@@ -29,13 +27,13 @@ const charts = {
   horizontal: HorizontalOrientaion,
 };
 
-export const BarChart = memo(({ orientation = 'vertical', legends, colors, ...props }: BarChartProps) => {
+export const BarChart = memo(({ orientation = 'vertical', ...props }: BarChartProps) => {
   const Chart = charts[orientation];
 
   return (
     <ErrorBoundary>
-      <Chart {...props} colors={colors} />
-      {legends && <Legends legends={legends} colors={colors} />}
+      <Chart {...props} colors={props.colors} />
+      {props.legends && <Legends legends={props.legends} colors={props.colors} />}
     </ErrorBoundary>
   );
 });
