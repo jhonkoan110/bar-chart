@@ -10,7 +10,7 @@ export const Legends = memo(({ legends, colors }: Props) => {
   return (
     <div className={styles.legends}>
       {legends.map((legend, i) => (
-        <div className={styles.ledendItem}>
+        <div key={i} className={styles.ledendItem}>
           <div className={styles.legendRect} style={{ backgroundColor: colors?.[i] ?? 'black' }} /> - <p>{legend}</p>
         </div>
       ))}

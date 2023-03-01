@@ -24,8 +24,6 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   public render() {
-    console.log({ error: this.state.error });
-
     if (this.state.hasError) {
       return <h1>BarChart Error: {String(this.state.error)}</h1>;
     }
