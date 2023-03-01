@@ -1,0 +1,18 @@
+.legends {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0 0 0 5rem;
+}
+
+.ledendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legendRect {
+  width: 15px;
+  height: 15px;
+  transform: translate(1px);
+}

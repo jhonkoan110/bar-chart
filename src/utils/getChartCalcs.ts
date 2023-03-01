@@ -1,3 +1,5 @@
+import { DataType } from '../components/BarChart';
+
 export const getNumberValues = (obj: Record<string, unknown>) => {
   return Object.values(obj).filter((val) => typeof val === 'number') as number[];
 };
@@ -5,7 +7,7 @@ export const getNumberValues = (obj: Record<string, unknown>) => {
 interface GetChartCalcsDTO {
   width: number;
   height: number;
-  data: any[];
+  data: DataType[];
 }
 
 export const getChartCalcs = ({ data, height, width }: GetChartCalcsDTO) => {
@@ -18,15 +20,15 @@ export const getChartCalcs = ({ data, height, width }: GetChartCalcsDTO) => {
   const xAxisY = y0 + yAxisLength;
 
   const dataYMax = data.reduce((currMax, value) => {
-    const numValues = getNumberValues(value);
+    // const numValues = getNumberValues(value);
 
-    return Math.max(currMax, Math.max(...numValues));
+    return Math.max(currMax, Math.max(...value.values));
   }, -Infinity);
 
   const dataYMin = data.reduce((currMin, value) => {
-    const numValues = getNumberValues(value);
+    // const numValues = getNumberValues(value);
 
-    return Math.min(currMin, Math.min(...numValues));
+    return Math.min(currMin, Math.min(...value.values));
   }, Infinity);
 
   const dataYRange = dataYMax - dataYMin;

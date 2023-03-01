@@ -1,0 +1,9 @@
+.container {
+  padding: 2rem;
+  text-align: center;
+  font-size: 1.5rem;
+  background-color: #fff;
+  box-shadow: 0px 0px 12px -5px rgba(34, 60, 80, 0.56);
+  border-radius: 10px;
+  position: fixed;
+}

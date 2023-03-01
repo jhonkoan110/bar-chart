@@ -1,92 +1,53 @@
-import React, { useState } from 'react';
-import './App.css';
-import { TestChart } from './components/TestChart';
+import React from 'react';
+import { BarChart, DataType } from './components/BarChart';
+import { Test } from './components/test';
 
-const mock = [
+const mock: DataType[] = [
   {
     name: 'Jan',
-    dohod: 360,
-    rashod: 255,
-    asdasd: 112,
-    asdasd2: 112,
-    asdasd3: 342,
-    asdasd4: 342,
+    values: [360, 255],
   },
   {
     name: 'Feb',
-    dohod: 255,
-    asdasd: 112,
-    asdasd2: 40,
-    asdasd3: 44,
-    rashod: 450,
-    фывыфвЖ: 40,
+    values: [100, 25],
   },
   {
-    name: 'Feb',
-    dohod: 255,
-    asdasd: 112,
-    asdasd2: 40,
-    asdasd3: 70,
-    rashod: 200,
+    name: 'Mar',
+    values: [456, 123],
   },
   {
-    name: 'Feb',
-    dohod: 255,
-    asdasd: 112,
-    asdasd2: 40,
-    asdasd3: 70,
-    rashod: 200,
+    name: 'Apr',
+    values: [111],
   },
 ];
 
 function App() {
-  const [dimensions, setDimensions] = useState({
-    width: 1000,
-    height: 300,
-  });
-
-  const toggle = () => {
-    if (dimensions.width === 1000 && dimensions.height === 300) {
-      setDimensions({ height: 600, width: 300 });
-    } else {
-      setDimensions({ width: 1000, height: 300 });
-    }
-  };
-
   return (
     <div className="App">
-      <button onClick={toggle}>toggle</button>
-      <TestChart
-        orientation="vertical"
-        height={dimensions.height}
-        width={dimensions.width}
+      <h1>Горизонатльная ориентация</h1>
+      <BarChart
+        orientation="horizontal"
+        height={300}
+        width={500}
         data={mock}
-        colors={['#ccc', 'blue', 'yellow', 'green', 'brown', 'grey', 'lightblue']}
-        legends={['Доход', 'Расход', 'Что-то', 'Hello', 'Goobye', 'Car', 'test']}
-        xAxisName="X"
-        yAxisName="Y"
-        ticks={10}
+        colors={['lightgreen', 'lightcoral']}
+        legends={['Доход', 'Расход']}
+        xAxisName="Details"
+        yAxisName="Month"
       />
 
-      <svg height="150" width="400">
-        <defs>
-          <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop
-              offset="0%"
-              style={{
-                stopColor: 'yellow',
-              }}
-            />
-            <stop
-              offset="100%"
-              style={{
-                stopColor: 'red',
-              }}
-            />
-          </linearGradient>
-        </defs>
-        <ellipse cx="200" cy="70" rx="85" ry="55" fill="url(#grad1)" />
-      </svg>
+      <h1>Вертикальная ориентация</h1>
+      <BarChart
+        orientation="vertical"
+        height={400}
+        width={400}
+        data={mock}
+        colors={['lightgreen', 'lightcoral']}
+        legends={['Доход', 'Расход']}
+        xAxisName="Month"
+        yAxisName="Details"
+      />
+      <Test />
     </div>
   );
 }
