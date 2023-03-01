@@ -10,7 +10,7 @@ interface Props {
 export const XAxis = memo((props: Props) => {
   // Линия оси.
   const lineX1 = CHART_PADDING;
-  const lineY1 = CHART_PADDING + props.xAxisLength;
+  const lineY1 = props.xAxisY;
   const lineX2 = CHART_PADDING + props.xAxisLength;
   const lineY2 = props.xAxisY;
 

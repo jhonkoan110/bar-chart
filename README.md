@@ -82,3 +82,4 @@ const Component = () => {
 | legends     | Массив подписей для столбцов            | string[]                | -                     | нет          |
 | xAxisName   | Нименование оси Х                       | string                  | 'x'                   | нет          |
 | yAxisName   | Нименование оси Y                       | string                  | 'y'                   | нет          |
+| ticks       | Количество интервалов между значениями  | number                  | 5                     | нет          |
